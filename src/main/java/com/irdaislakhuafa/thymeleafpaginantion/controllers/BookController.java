@@ -1,6 +1,8 @@
 package com.irdaislakhuafa.thymeleafpaginantion.controllers;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -34,7 +36,7 @@ public class BookController {
             Page<BookEntity> bookPages = bookService.findAll(
                     PageRequest.of(
                             requestPage.orElse(0),
-                            requestSize.orElse(10),
+                            requestSize.orElse(null),
                             Sort.by("name").ascending()));
 
             List<Integer> bookPageNumbers = IntStream.rangeClosed(
@@ -51,10 +53,14 @@ public class BookController {
             model.addAttribute("contentTitle", "Book Table");
             model.addAttribute("bookPage", bookPages);
             model.addAttribute("bookPageNumbers", bookPageNumbers);
-            return "index";
         } catch (Exception e) {
-            throw new RuntimeException("File view not found!");
+            model.addAttribute("title", "Spring Boot Thymeleaf | Pagination");
+            model.addAttribute("contentTitle", "Book Table");
+            e.printStackTrace();
+            // throw new RuntimeException("File view not found!");
+            // return "index";
         }
+        return "index";
     }
 
 }

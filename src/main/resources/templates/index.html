@@ -8,7 +8,6 @@
     <div class="container">
         <!-- books title -->
         <h1 th:text="${contentTitle}" class="text-center mt-5"></h1>
-
         <!-- table books -->
         <table class="table table-light col-sm-3 shadow wow fadeInUp rounded rounded-5">
             <thead>
@@ -20,20 +19,20 @@
             </thead>
 
             <tbody>
-                <tr th:each="book, status : ${bookPage.content}">
-                    <td th:text="${status.index + 1}"></td>
-                    <td th:text="${book.name}"></td>
-                    <td th:text="${book.description}"></td>
-                    <!-- <a th:text="${status}"></a> -->
-                </tr>
+                <div th:if="${bookPage != null}">
+                    <tr th:each="book, status : ${bookPage.content}">
+                        <td th:text="${status.index + 1}"></td>
+                        <td th:text="${book.name}"></td>
+                        <td th:text="${book.description}"></td>
+                    </tr>
+                </div>
             </tbody>
         </table>
 
         <!-- <div th:text="${bookPage.totalPages}" class="pagination"></div> -->
         <!-- pagination -->
         <!-- if total page more than zero 0 -->
-        <div class="btn rounded-pill btn-light shadow">
-
+        <div th:if="${bookPage != null}" class="btn rounded-pill btn-light shadow">
             <a th:if="${bookPage.totalPages > 0}" th:each="bookPageNumber : ${bookPageNumbers}">
                 <a th:text="${bookPageNumber}"
                     th:class="${bookPageNumber == (bookPage.number + 1)} ? 'active btn btn-primary rounded-pill py-0 px-2' : text-decoration-none"
